@@ -1,3 +1,4 @@
+import json
 import logging
 import os
 import sys
@@ -7,6 +8,7 @@ import pprint
 def extract_cards(decklist):
     deck = {'main': {}, 'sideboard': {}}
     is_sideboard = False
+    decklist = decklist.replace('\r\n', '\n')
     for line in decklist.split('\n'):
         if 'sideboard' in line.lower():
             is_sideboard = True
@@ -23,7 +25,7 @@ def main(path):
                 decks.append(extract_cards(deckfile.read().strip()))
 
     for deck in decks:
-        pprint.pprint(deck)
+        pprint.pprint(json.dumps(deck))
 
 if __name__ == '__main__':
     import argparse
